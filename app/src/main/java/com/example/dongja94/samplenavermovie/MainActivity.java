@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText keywordView;
     ListView listView;
-    ArrayAdapter<MovieItem> mAdapter;
+    MovieAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         keywordView = (EditText)findViewById(R.id.edit_keyword);
         listView = (ListView)findViewById(R.id.listView);
-        mAdapter = new ArrayAdapter<MovieItem>(this, android.R.layout.simple_list_item_1);
+//        mAdapter = new ArrayAdapter<MovieItem>(this, android.R.layout.simple_list_item_1);
+        mAdapter = new MovieAdapter();
         listView.setAdapter(mAdapter);
         Button btn = (Button)findViewById(R.id.btn_search);
         btn.setOnClickListener(new View.OnClickListener() {
