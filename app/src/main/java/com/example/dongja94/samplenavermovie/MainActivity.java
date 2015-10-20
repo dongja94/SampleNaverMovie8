@@ -58,9 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String keyword = keywordView.getText().toString();
-                if (!TextUtils.isEmpty(keyword)) {
-                    new MovieTask().execute(keyword);
-                }
+                searchMovie(keyword);
             }
         });
 
@@ -73,11 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String keyword = s.toString();
-                if (!TextUtils.isEmpty(keyword)) {
-                    new MovieTask().execute(keyword);
-                } else {
-                    mAdapter.clear();
-                }
+                searchMovie(keyword);
             }
 
             @Override
@@ -85,6 +79,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void searchMovie(String keyword) {
+        if (!TextUtils.isEmpty(keyword)) {
+            NetworkManager.getInstance().getNaverMovies(new NaverMovieRequest(keyword), new NetworkManager.OnResultListener<NaverMovies>() {
+                @Override
+                public void onSuccess(NetworkRequest<NaverMovies> request, NaverMovies result) {
+                    mAdapter.clear();
+                    for (MovieItem item : result.items) {
+                        mAdapter.add(item);
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NaverMovies> request, int code) {
+                    Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            mAdapter.clear();
+        }
     }
 
     public static final String MOVIE_URL = "http://openapi.naver.com/search?key=55f1e342c5bce1cac340ebb6032c7d9a&query=%s&display=10&start=1&target=movie";
