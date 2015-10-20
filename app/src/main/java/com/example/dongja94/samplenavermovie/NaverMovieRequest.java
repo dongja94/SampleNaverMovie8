@@ -14,7 +14,7 @@ import java.net.URLEncoder;
 public class NaverMovieRequest extends NetworkRequest<NaverMovies> {
 
     public NaverMovieRequest(String keyword) {
-        this(keyword, 1, 10);
+        this(keyword, 1, 50);
     }
 
     String keyword;

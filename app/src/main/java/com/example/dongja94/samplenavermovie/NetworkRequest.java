@@ -23,4 +23,11 @@ public abstract class NetworkRequest<T> {
     public void setOutput(HttpURLConnection conn) {
 
     }
+    private boolean isCancel = false;
+    public void cancel() {
+        isCancel = true;
+    }
+    public boolean isCancel() {
+        return isCancel;
+    }
 }
